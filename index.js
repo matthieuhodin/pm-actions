@@ -2,9 +2,12 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 function actualiserTotalColonne(columnId){
+   
+   console.log('actualiserTotalColonne:'+columnId);
    const resultCards = await github.projects.listCards({column_id: columnId });
   
-  console.log('resultCards :', resultCards);
+   console.log('resultCards :');
+   console.log(JSON.stringify(resultCards, undefined, 2));
   
 }
 
@@ -15,9 +18,9 @@ try {
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-  
+  //const payload = JSON.stringify(github.context.payload, undefined, 2)
+  //console.log(`The event payload: ${payload}`);
+  console.log('evenement recu');
   actualiserTotalColonne( github.context.payload.project_card.column_id);
   if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
     actualiserTotalColonne(github.context.payload.changes.column_id.from);
