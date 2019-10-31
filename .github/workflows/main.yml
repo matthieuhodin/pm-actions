@@ -1,4 +1,4 @@
-on: [push]
+on: [project_card]
 
 jobs:
   hello_world_job:
