@@ -26,7 +26,7 @@ async function actualiserTotalColonne(octokit, columnId){
          var label = detailIssue.data.labels[iLabel];
          
          if( label.name.indexOf('size:')==0){
-            total+= parseFloat(label.name.replace('size:','')
+            total+= parseFloat(label.name.replace('size:',''))
          }
       }
       
