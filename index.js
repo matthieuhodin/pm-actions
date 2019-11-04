@@ -1,10 +1,10 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-function actualiserTotalColonne(octokit, columnId){
+async function actualiserTotalColonne(octokit, columnId){
    
    console.log('actualiserTotalColonne:'+columnId);
-   const resultCards = octokit.projects.listCards({column_id: columnId });
+   const resultCards = await octokit.projects.listCards({column_id: columnId });
   
    console.log('resultCards :');
    console.log(JSON.stringify(resultCards, undefined, 2));
@@ -25,9 +25,9 @@ try {
   //const payload = JSON.stringify(github.context.payload, undefined, 2)
   //console.log(`The event payload: ${payload}`);
   console.log('evenement recu');
-  actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
+  await actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
   if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
-    actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
+    await actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
   }
   
 } catch (error) {
