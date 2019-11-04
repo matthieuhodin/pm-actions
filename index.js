@@ -37,14 +37,12 @@ async function actualiserTotalColonne(octokit, columnId){
       
    }
    
-   console.log('cardStat');
-   console.log(cardStat);
    if (cardStat==null){
       const createCardResult= await octokit.projects.createCard({column_id: columnId , note:'<!--STAT-->'})
       cardStat= createCardResult.data;
    }
    
-   const updateCard= await  octokit.projects.updateCard({card_id:cardStat.card_id, note:'<!--STAT-->Total : '+ total})
+   const updateCard= await  octokit.projects.updateCard({card_id:cardStat.id, note:'<!--STAT-->Total : '+ total})
    
    console.log('Total :'+total);
     //     "content_url": "https://api.github.com/repos/matthieuhodin/pm-actions/issues/1"
