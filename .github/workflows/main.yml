@@ -9,7 +9,7 @@ jobs:
       id: hello
       uses: matthieuhodin/pm-actions@master
       with:
-        who-to-greet: 'Mona the Octocat'
+        action-type: 'project_card'
         myToken: ${{ secrets.GITHUB_TOKEN }}
     # Use the output from the `hello` step
     - name: Get the output time
