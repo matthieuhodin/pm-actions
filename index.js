@@ -1,10 +1,10 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-function actualiserTotalColonne(columnId){
+function actualiserTotalColonne(octokit, columnId){
    
    console.log('actualiserTotalColonne:'+columnId);
-   const resultCards = github.projects.listCards({column_id: columnId });
+   const resultCards = octokit.projects.listCards({column_id: columnId });
   
    console.log('resultCards :');
    console.log(JSON.stringify(resultCards, undefined, 2));
@@ -12,6 +12,10 @@ function actualiserTotalColonne(columnId){
 }
 
 try {
+   
+  const myToken = core.getInput('myToken');
+  const octokit = new github.GitHub(myToken);
+
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
   console.log(`Hello ${nameToGreet}!`);
@@ -21,9 +25,9 @@ try {
   //const payload = JSON.stringify(github.context.payload, undefined, 2)
   //console.log(`The event payload: ${payload}`);
   console.log('evenement recu');
-  actualiserTotalColonne( github.context.payload.project_card.column_id);
+  actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
   if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
-    actualiserTotalColonne(github.context.payload.changes.column_id.from);
+    actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
   }
   
 } catch (error) {
