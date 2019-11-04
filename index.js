@@ -4,7 +4,7 @@ const github = require('@actions/github');
 function actualiserTotalColonne(columnId){
    
    console.log('actualiserTotalColonne:'+columnId);
-   const resultCards = await github.projects.listCards({column_id: columnId });
+   const resultCards = github.projects.listCards({column_id: columnId });
   
    console.log('resultCards :');
    console.log(JSON.stringify(resultCards, undefined, 2));
