@@ -56,17 +56,26 @@ async function run() {
     // myToken: ${{ secrets.GITHUB_TOKEN }}
     // https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret
     const myToken = core.getInput('myToken');
-
     const octokit = new github.GitHub(myToken);
    
-   // Get the JSON webhook payload for the event that triggered the workflow
-   //const payload = JSON.stringify(github.context.payload, undefined, 2)
-   //console.log(`The event payload: ${payload}`);
-   await actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
-   if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
-    await actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
+   const actionType = core.getInput('action-type');
+       
+   console.log('actionType : '+actionType);
+   
+   if( actionType== 'project_card'){
+      // Get the JSON webhook payload for the event that triggered the workflow
+      //const payload = JSON.stringify(github.context.payload, undefined, 2)
+      //console.log(`The event payload: ${payload}`);
+      await actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
+      if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
+       await actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
+      }
    }
    
+   if( actionType== 'milestone'){
+      const payload = JSON.stringify(github.context.payload, undefined, 2)
+      console.log(`The event payload: ${payload}`);
+   }
 }
 
 run();
