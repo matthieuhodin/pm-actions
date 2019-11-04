@@ -4,6 +4,7 @@ const core = require('@actions/core');
 
 async function actualiserTotalColonne(octokit, columnId){
    console.log('actualiserTotalColonne:'+columnId);
+   var total=0;
    const resultCards = await octokit.projects.listCards({column_id: columnId });
   
    for(var iCard=0; iCard<  resultCards.data.length; iCard++){
@@ -21,7 +22,16 @@ async function actualiserTotalColonne(octokit, columnId){
       console.log('DETAIL Issue '+issue_number);
       console.log(detailIssue);
       
+      for(var iLabel =0 ; iLabel < detailIssue.data.labels.length; iLabel++){
+         var label = detailIssue.data.labels[iLabel];
+         
+         if( label.name.indexOf('size:')==0){
+            total+= parseFloat(label.name.replace('size:','')
+         }
+      }
+      
    }
+   console.log('Total :'+total);
     //     "content_url": "https://api.github.com/repos/matthieuhodin/pm-actions/issues/1"
    
 }
