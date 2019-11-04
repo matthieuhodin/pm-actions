@@ -32,10 +32,13 @@ async function actualiserTotalColonne(octokit, columnId){
       }
       
       if( (card.note||'').indexOf('<!--STAT-->')==0){
-         cardStat= card;
+         cardStat= resultCards.data[iCard];
       }
       
    }
+   
+   console.log('cardStat');
+   console.log(cardStat);
    if (cardStat==null){
       const createCardResult= await octokit.projects.createCard({column_id: columnId , note:'<!--STAT-->'})
       cardStat= createCardResult.data;
@@ -57,17 +60,6 @@ async function run() {
     const myToken = core.getInput('myToken');
 
     const octokit = new github.GitHub(myToken);
-
-    const { data: pullRequest } = await octokit.pulls.get({
-        owner: 'octokit',
-        repo: 'rest.js',
-        pull_number: 123,
-        mediaType: {
-          format: 'diff'
-        }
-    });
-
-    console.log(pullRequest);
    
    // Get the JSON webhook payload for the event that triggered the workflow
    //const payload = JSON.stringify(github.context.payload, undefined, 2)
