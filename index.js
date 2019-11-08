@@ -75,6 +75,9 @@ async function run() {
    if( actionType== 'milestone'){
       const payload = JSON.stringify(github.context.payload, undefined, 2)
       console.log(`The event payload: ${payload}`);
+      var milestoneId= github.context.payload.milestone.id;
+      
+      
    }
 }
 
