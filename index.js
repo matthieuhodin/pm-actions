@@ -1,6 +1,12 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 
+async function actualiserTotalMilestone(octokit, milestoneId){
+   console.log("actualiserTotalMilestone "+ milestoneId);
+   
+   const resultCards = await octokit.projects.listCards({column_id: milestoneId });
+  
+}
 
 async function actualiserTotalColonne(octokit, columnId){
    console.log('actualiserTotalColonne:'+columnId);
@@ -73,11 +79,11 @@ async function run() {
    }
    
    if( actionType== 'milestone'){
-      const payload = JSON.stringify(github.context.payload, undefined, 2)
+      const payload = JSON.stringify(github.context.payload, undefined, 4)
       console.log(`The event payload: ${payload}`);
       var milestoneId= github.context.payload.milestone.id;
       
-      
+      await actualiserTotalMilestone(octokit, milestoneId);
    }
 }
 
