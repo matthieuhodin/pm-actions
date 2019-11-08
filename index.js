@@ -13,7 +13,7 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneId){
    
    console.log(JSON.stringify(queryParams));
    const issues = await octokit.issues.listForRepo(queryParams);
-   console.log(issues);
+   console.log(JSON.stringify(issues.data[0]));
 }
 
 async function actualiserTotalColonne(octokit, columnId){
