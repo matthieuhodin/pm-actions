@@ -7,7 +7,7 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneId){
    const issues = await octokit.issues.listForRepo({
                                                owner:owner,
                                                repo: repo,
-                                               milestone: milestoneId
+                                               milestone: parseInt(milestoneId,10)
                                              });
    console.log(issues);
 }
