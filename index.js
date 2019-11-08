@@ -2,7 +2,7 @@ const github = require('@actions/github');
 const core = require('@actions/core');
 
 async function actualiserTotalMilestone(octokit,owner, repo, milestoneId){
-   console.log("actualiserTotalMilestone "+ milestoneId);
+   console.log(`actualiserTotalMilestone ${owner}-${repo}-${milestoneId}.`);
    
    const issues = await octokit.issues.listForRepo({
                                                owner:owner,
