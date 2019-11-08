@@ -8,7 +8,7 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneId){
    var queryParams={
                        owner:owner,
                        repo: repo,
-                       milestone: 4812794//parseInt(milestoneId,10)
+                       milestone: 2//4812794//parseInt(milestoneId,10)
                      }
    
    console.log(JSON.stringify(queryParams));
