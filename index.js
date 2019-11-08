@@ -4,11 +4,15 @@ const core = require('@actions/core');
 async function actualiserTotalMilestone(octokit,owner, repo, milestoneId){
    console.log(`actualiserTotalMilestone ${owner}-${repo}-${milestoneId}.`);
    
-   const issues = await octokit.issues.listForRepo({
-                                               owner:owner,
-                                               repo: repo,
-                                               milestone: parseInt(milestoneId,10)
-                                             });
+   
+   var queryParams={
+                       owner:owner,
+                       repo: repo,
+                       milestone: parseInt(milestoneId,10)
+                     }
+   
+   console.log(JSON.stringify(queryParams));
+   const issues = await octokit.issues.listForRepo(queryParams);
    console.log(issues);
 }
 
@@ -83,8 +87,8 @@ async function run() {
    }
    
    if( actionType== 'milestone'){
-      const payload = JSON.stringify(github.context.payload, undefined, 4)
-      console.log(`The event payload: ${payload}`);
+    // const payload = JSON.stringify(github.context.payload, undefined, 4)
+    //  console.log(`The event payload: ${payload}`);
       var milestoneId= github.context.payload.issue.milestone.id;
       var owner=   github.context.payload.repository.owner.login;
       var repo= github.context.payload.repository.name;
