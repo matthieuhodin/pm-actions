@@ -13,7 +13,7 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
    
 
    const issues = await octokit.issues.listForRepo(queryParams);
-   console.log(JSON.stringify(issues.data));
+   //console.log(JSON.stringify(issues.data));
    
    var total=0;
    for(var i=0; i< issues.data.length;i++){
@@ -21,7 +21,15 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
       total+=sizeOfIssue;
    }
    
-   console.log(total);
+   //console.log(total);
+   
+   var updateMilestoneResult= await octokit.issues.updateMilestone({
+                                owner: owner,
+                                repo:repo,
+                                milestone_number:milestoneNumber,
+                                description: 'Total '+ total
+                              })
+   
 }
 
 function getSizeOfIssue(issue){
