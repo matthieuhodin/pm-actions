@@ -1,14 +1,14 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 
-async function actualiserTotalMilestone(octokit,owner, repo, milestoneId){
-   console.log(`actualiserTotalMilestone ${owner}-${repo}-${milestoneId}.`);
+async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
+   console.log(`actualiserTotalMilestone ${owner}-${repo}-${milestoneNumber}.`);
    
    
    var queryParams={
                        owner:owner,
                        repo: repo,
-                       milestone: 2//4812794//parseInt(milestoneId,10)
+                       milestone: milestoneNumber//4812794//parseInt(milestoneId,10)
                      }
    
    console.log(JSON.stringify(queryParams));
@@ -89,10 +89,10 @@ async function run() {
    if( actionType== 'milestone'){
     // const payload = JSON.stringify(github.context.payload, undefined, 4)
     //  console.log(`The event payload: ${payload}`);
-      var milestoneId= github.context.payload.issue.milestone.id;
+      var milestoneNumber= github.context.payload.issue.milestone.number;
       var owner=   github.context.payload.repository.owner.login;
       var repo= github.context.payload.repository.name;
-      await actualiserTotalMilestone(octokit,owner, repo, milestoneId);
+      await actualiserTotalMilestone(octokit,owner, repo, milestoneNumber);
    }
 }
 
