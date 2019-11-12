@@ -24,7 +24,8 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
       totalHt[issues.data[i].state]+=(totalHt[issues.data[i].state]||0)+sizeOfIssue;
    }
    
-   //console.log(total);
+   console.log(total);
+   console.log(totalHt);
    
    var updateMilestoneResult= await octokit.issues.updateMilestone({
                                 owner: owner,
