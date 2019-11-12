@@ -11,9 +11,30 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
                        milestone: milestoneNumber//4812794//parseInt(milestoneId,10)
                      }
    
-   console.log(JSON.stringify(queryParams));
+
    const issues = await octokit.issues.listForRepo(queryParams);
    console.log(JSON.stringify(issues.data));
+   
+   var total=0;
+   for(var i=0; i< issues.data.length;i++){
+      var sizeOfIssue=getSizeOfIssue(issues.data[i]);
+      total+=sizeOfIssue;
+   }
+   
+   console.log(total);
+}
+
+function getSizeOfIssue(issue){
+   var total=0;
+   
+   for(var iLabel =0 ; iLabel <issue.labels.length; iLabel++){
+      var label =issue.labels[iLabel];
+
+      if( label.name.indexOf('size:')==0){
+         total+= parseFloat(label.name.replace('size:',''))
+      }
+   }
+   return total;
 }
 
 async function actualiserTotalColonne(octokit, columnId){
@@ -36,13 +57,9 @@ async function actualiserTotalColonne(octokit, columnId){
                                 issue_number
                               });
 
-         for(var iLabel =0 ; iLabel < detailIssue.data.labels.length; iLabel++){
-            var label = detailIssue.data.labels[iLabel];
-
-            if( label.name.indexOf('size:')==0){
-               total+= parseFloat(label.name.replace('size:',''))
-            }
-         }
+         total+= getSizeOfIssue(detailIssue.data);
+         
+       
       }
       
       if( (card.note||'').indexOf('<!--STAT-->')==0){
