@@ -21,7 +21,7 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
       var sizeOfIssue=getSizeOfIssue(issues.data[i]);
       total+=sizeOfIssue;
       
-      totalHt[issues.data[i].state]+=(totalHt[issues.data[i].state]||0)+sizeOfIssue;
+      totalHt[issues.data[i].state]=(totalHt[issues.data[i].state]||0)+sizeOfIssue;
    }
    
    console.log(total);
