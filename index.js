@@ -116,12 +116,17 @@ async function run() {
    }
    
    if( actionType== 'milestone'){
-    // const payload = JSON.stringify(github.context.payload, undefined, 4)
-    //  console.log(`The event payload: ${payload}`);
-      var milestoneNumber= github.context.payload.issue.milestone.number;
-      var owner=   github.context.payload.repository.owner.login;
-      var repo= github.context.payload.repository.name;
-      await actualiserTotalMilestone(octokit,owner, repo, milestoneNumber);
+      
+      if (github.context.payload.issue.milestone!= null){
+         var milestoneNumber= github.context.payload.issue.milestone.number;
+         var owner=   github.context.payload.repository.owner.login;
+         var repo= github.context.payload.repository.name;
+         await actualiserTotalMilestone(octokit,owner, repo, milestoneNumber);
+      }else{
+         const payload = JSON.stringify(github.context.payload, undefined, 4)
+         console.log(`The event payload: ${payload}`);
+      
+      }
    }
 }
 
