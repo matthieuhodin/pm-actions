@@ -16,9 +16,12 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
    //console.log(JSON.stringify(issues.data));
    
    var total=0;
+   var totalHt={};
    for(var i=0; i< issues.data.length;i++){
       var sizeOfIssue=getSizeOfIssue(issues.data[i]);
       total+=sizeOfIssue;
+      
+      totalHt[issues.data[i].state]+=(totalHt[issues.data[i].state]||0)+sizeOfIssue;
    }
    
    //console.log(total);
@@ -27,7 +30,7 @@ async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
                                 owner: owner,
                                 repo:repo,
                                 milestone_number:milestoneNumber,
-                                description: 'Total '+ total
+                                description: 'Total '+ total + ' / ' + Object.keys(totalHt).reduce((c,i)=>{c+=' '+i+'='+totalHt[i]; return c;},'')
                               })
    
 }
