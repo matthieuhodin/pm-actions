@@ -1,6 +1,6 @@
 on: 
   issues:
-    types: [milestoned, demilestoned]
+    types: [milestoned, demilestoned,deleted,closed,reopened,labeled,unlabeled]
 
 jobs:
   hello_world_job:
