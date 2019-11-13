@@ -19,4 +19,5 @@ The time we greeted you.
 uses: actions/hello-world-javascript-action@v1
 with:
   who-to-greet: 'Mona the Octocat'
-  <img src"./graph.svg" />
+
+  ![Alt text](https://raw.githubusercontent.com/matthieuhodin/pm-actions/master/graph.svg?sanitize=true)
