@@ -49,6 +49,22 @@ function getSizeOfIssue(issue){
    return total;
 }
 
+async function actualiserStatsProjet(octokit, projectId){
+   var resultCols= await octokit.projects.listColumns({
+                    project_id:  projectId
+                  });
+   
+   var stats={};
+   for(var i=0; i< resultCols.data.length; i++){
+      var totalColonne = await actualiserTotalColonne(octokit, resultCols.data[i].id);
+      stats[resultCols.data[i].name]=totalColonne;
+   }
+   
+   console.log('stats');
+   console.log(stats);
+   
+}
+
 async function actualiserTotalColonne(octokit, columnId){
    console.log('actualiserTotalColonne:'+columnId);
    var total=0;
@@ -71,7 +87,6 @@ async function actualiserTotalColonne(octokit, columnId){
 
          total+= getSizeOfIssue(detailIssue.data);
          
-       
       }
       
       if( (card.note||'').indexOf('<!--STAT-->')==0){
@@ -89,6 +104,8 @@ async function actualiserTotalColonne(octokit, columnId){
    
    console.log('Total :'+total);
     //     "content_url": "https://api.github.com/repos/matthieuhodin/pm-actions/issues/1"
+   
+   return total;
    
 }
 
@@ -113,6 +130,16 @@ async function run() {
       if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
        await actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
       }
+   }
+   
+   if( actionType== 'project'){
+      // Get the JSON webhook payload for the event that triggered the workflow
+      //const payload = JSON.stringify(github.context.payload, undefined, 2)
+      console.log(`The event payload: ${payload}`);
+      //await actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
+      //if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
+      // await actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
+      //}
    }
    
    if( actionType== 'milestone'){
