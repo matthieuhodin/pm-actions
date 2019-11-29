@@ -65,6 +65,13 @@ async function actualiserStatsProjet(octokit, projectId){
    
 }
 
+async function getColumnInfo(octokit, columnId){
+   const resultColumn = await octokit.projects.getColumn({column_id: columnId})
+   
+   return resultColumn.data
+  
+}
+
 async function actualiserTotalColonne(octokit, columnId){
    console.log('actualiserTotalColonne:'+columnId);
    var total=0;
@@ -136,6 +143,9 @@ async function run() {
       // Get the JSON webhook payload for the event that triggered the workflow
       const payload = JSON.stringify(github.context.payload, undefined, 2)
       console.log(`The event payload: ${payload}`);
+      var project = await getColumnInfo(octokit, github.context.payload.project_card.column_id);
+      await actualiserStatsProjet(octokit, project.id);
+      
       //await actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
       //if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
       // await actualiserTotalColonne(octokit, github.context.payload.changes.column_id.from);
