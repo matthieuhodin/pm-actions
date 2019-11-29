@@ -63,6 +63,18 @@ async function actualiserStatsProjet(octokit, projectId){
    console.log('stats');
    console.log(stats);
    
+   var max=0;
+   for(var p in stats){
+      if( stats[p]>max){
+         max=stats[p]
+      }
+   }
+   
+   var projectResult= await octokit.projects.get({project_id:projectId})
+   
+   await octokit.projects.update({project_id: projectId, body:'```JSON.stringify(stats)```'})
+   
+   
 }
 
 async function getColumnInfo(octokit, columnId){
