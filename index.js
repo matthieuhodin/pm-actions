@@ -72,7 +72,7 @@ async function actualiserStatsProjet(octokit, projectId){
    
    var projectResult= await octokit.projects.get({project_id:projectId})
    
-   await octokit.projects.update({project_id: projectId, body:'```JSON.stringify(stats)```'})
+   await octokit.projects.update({project_id: projectId, body:'```'+JSON.stringify(stats, null, 2)+'```'})
    
    
 }
