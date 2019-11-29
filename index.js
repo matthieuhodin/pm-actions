@@ -134,7 +134,7 @@ async function run() {
    
    if( actionType== 'project'){
       // Get the JSON webhook payload for the event that triggered the workflow
-      //const payload = JSON.stringify(github.context.payload, undefined, 2)
+      const payload = JSON.stringify(github.context.payload, undefined, 2)
       console.log(`The event payload: ${payload}`);
       //await actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
       //if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
