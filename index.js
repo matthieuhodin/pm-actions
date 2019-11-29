@@ -143,8 +143,13 @@ async function run() {
       // Get the JSON webhook payload for the event that triggered the workflow
       const payload = JSON.stringify(github.context.payload, undefined, 2)
       console.log(`The event payload: ${payload}`);
-      var project = await getColumnInfo(octokit, github.context.payload.project_card.column_id);
-      await actualiserStatsProjet(octokit, project.id);
+      var column = await getColumnInfo(octokit, github.context.payload.project_card.column_id);
+      
+      console.log( 'project column');
+      console.log(JSON.stringify(column));
+      
+      var temp=column.project_url.split('/')
+      await actualiserStatsProjet(octokit, temp[temp.length-1]);
       
       //await actualiserTotalColonne(octokit, github.context.payload.project_card.column_id);
       //if( github.context.payload.changes && github.context.payload.changes.column_id && github.context.payload.changes.column_id.from){
