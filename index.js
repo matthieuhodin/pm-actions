@@ -177,7 +177,7 @@ async function run() {
       const payload = JSON.stringify(github.context.payload, undefined, 2)
       console.log(`The event payload: ${payload}`);
      
-         var milestoneNumber= github.context.payload.issue.milestone.number;
+         var milestoneNumber= github.context.payload.milestone.number;
          var owner=   github.context.payload.repository.owner.login;
          var repo= github.context.payload.repository.name;
          await transfereIssuesSurProchainMilestone(octokit,owner, repo, milestoneNumber);
