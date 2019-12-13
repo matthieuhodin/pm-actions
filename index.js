@@ -173,6 +173,10 @@ async function run() {
    console.log('actionType : '+actionType);
    
    if( actionType === 'next-milestone'){
+     
+      const payload = JSON.stringify(github.context.payload, undefined, 2)
+      console.log(`The event payload: ${payload}`);
+     
          var milestoneNumber= github.context.payload.issue.milestone.number;
          var owner=   github.context.payload.repository.owner.login;
          var repo= github.context.payload.repository.name;
