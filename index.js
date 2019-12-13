@@ -4,10 +4,10 @@ const core = require('@actions/core');
 async function transfereIssuesSurProchainMilestone(octokit,owner, repo, milestoneNumber){
   
 
-   var nextMilestones= await octokit.issues.listMilestonesForRepo({owner:owner, repo:repo, state :'open', sort:'due_on', direction:'asc', per_page:1  });
+   var nextMilestone= await octokit.issues.listMilestonesForRepo({owner:owner, repo:repo, state :'open', sort:'due_on', direction:'asc', per_page:1  });
   
-  console.log('nextMilestones');
-  console.log(JSON.stringify(nextMilestones,' ', 4));
+  console.log('nextMilestone');
+  console.log(JSON.stringify(nextMilestone,' ', 4));
   
    if( nextMilestone!= null && nextMilestone.data!= null){
        var queryParams={
