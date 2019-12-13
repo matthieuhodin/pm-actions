@@ -28,7 +28,7 @@ async function transfereIssuesSurProchainMilestone(octokit,owner, repo, mileston
          await octokit.issues.update({
                           owner:owner,
                           repo:repo,
-                          issue_number:issues.data[i].issue_number,
+                          issue_number:issues.data[i].number,
                            milestone:nextMilestone.data.number
                         })
       }
