@@ -9,7 +9,7 @@ async function transfereIssuesSurProchainMilestone(octokit,owner, repo, mileston
   console.log('nextMilestone');
   console.log(JSON.stringify(nextMilestone,' ', 4));
   
-   if( nextMilestone!= null && nextMilestone.data!= null){
+   if( nextMilestone!= null && nextMilestone.data!= null &&  nextMilestone.data.length>0){
        var queryParams={
                         owner:owner,
                         repo: repo,
@@ -30,14 +30,14 @@ async function transfereIssuesSurProchainMilestone(octokit,owner, repo, mileston
                           owner:owner,
                           repo:repo,
                           issue_number:issues.data[i].number,
-                           milestone:nextMilestone.data.number
+                           milestone:nextMilestone.data[0].number
                         },' ',4));
         
          var issuesUpdatedResult= await octokit.issues.update({
                           owner:owner,
                           repo:repo,
                           issue_number:issues.data[i].number,
-                           milestone:nextMilestone.data.number
+                           milestone:nextMilestone.data[0].number
                         });
         
         console.log(JSON.stringify(issuesUpdatedResult,' ', 4));
