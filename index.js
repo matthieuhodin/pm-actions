@@ -1,7 +1,7 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 
-asycn function transfereIssuesSurProchainMilestone(octokit,owner, repo, milestoneNumber){
+async function transfereIssuesSurProchainMilestone(octokit,owner, repo, milestoneNumber){
   
 
    var nextMilestones= await octokit.issues.listMilestonesForRepo({owner:owner, repo:repo, state :'open', sort:'due_on', direction:'asc', per_page:1  });
