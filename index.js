@@ -1,6 +1,37 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 
+asycn function transfereIssuesSurProchainMilestone(octokit,owner, repo, milestoneNumber){
+  
+
+   var nextMilestones= await octokit.issues.listMilestonesForRepo({owner:owner, repo:repo, state :'open', sort:'due_on', direction:'asc', per_page:1  });
+   if( nextMilestone!= null && nextMilestone.data!= null){
+       var queryParams={
+                        owner:owner,
+                        repo: repo,
+                        milestone: milestoneNumber,
+                        state:'open',
+                        per_page:100
+                     };
+   
+
+      const issues = await octokit.issues.listForRepo(queryParams);
+      
+      console.log(JSON.stringify(issues.data));
+      
+      for(var i=0; i< issues.data.length; i++){
+         await octokit.issues.update({
+                          owner:owner,
+                          repo:repo,
+                          issue_number:issues.data[i].issue_number,
+                           milestone:nextMilestone.data.number
+                        })
+      }
+      
+   }
+   
+}
+
 async function actualiserTotalMilestone(octokit,owner, repo, milestoneNumber){
    console.log(`actualiserTotalMilestone ${owner}-${repo}-${milestoneNumber}.`);
    
@@ -140,6 +171,13 @@ async function run() {
    const actionType = core.getInput('action-type');
        
    console.log('actionType : '+actionType);
+   
+   if( actionType === 'next-milestone'){
+         var milestoneNumber= github.context.payload.issue.milestone.number;
+         var owner=   github.context.payload.repository.owner.login;
+         var repo= github.context.payload.repository.name;
+         await transfereIssuesSurProchainMilestone(octokit,owner, repo, milestoneNumber);
+   }
    
    if( actionType== 'project_card'){
       // Get the JSON webhook payload for the event that triggered the workflow
