@@ -5,6 +5,10 @@ async function transfereIssuesSurProchainMilestone(octokit,owner, repo, mileston
   
 
    var nextMilestones= await octokit.issues.listMilestonesForRepo({owner:owner, repo:repo, state :'open', sort:'due_on', direction:'asc', per_page:1  });
+  
+  console.log('nextMilestones');
+  console.log(JSON.stringify(nextMilestones,' ', 4));
+  
    if( nextMilestone!= null && nextMilestone.data!= null){
        var queryParams={
                         owner:owner,
@@ -17,6 +21,7 @@ async function transfereIssuesSurProchainMilestone(octokit,owner, repo, mileston
 
       const issues = await octokit.issues.listForRepo(queryParams);
       
+     
       console.log(JSON.stringify(issues.data));
       
       for(var i=0; i< issues.data.length; i++){
@@ -173,9 +178,6 @@ async function run() {
    console.log('actionType : '+actionType);
    
    if( actionType === 'next-milestone'){
-     
-      const payload = JSON.stringify(github.context.payload, undefined, 2)
-      console.log(`The event payload: ${payload}`);
      
          var milestoneNumber= github.context.payload.milestone.number;
          var owner=   github.context.payload.repository.owner.login;
