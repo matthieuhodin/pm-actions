@@ -1,1 +1,15 @@
+on: 
+  milestone:
+    types: [closed]
 
+jobs:
+  move_open_issues:
+    runs-on: ubuntu-latest
+    name: Move open issue in a closed milestone to the next milestone
+    steps:
+    - name: Hello world action step
+      id: hello
+      uses: matthieuhodin/pm-actions@master
+      with:
+        action-type: 'next-milestone'
+        myToken: ${{ secrets.GITHUB_TOKEN }}
